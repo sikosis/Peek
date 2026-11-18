@@ -44,7 +44,7 @@ class ViewFile : public BView {
    private:
       int32 totalImageFiles;
       virtual void DetachedFromWindow();
-      thread_id selectionThread, slideshowThreadID;
+      thread_id slideshowThreadID;
       char currentPath[B_PATH_NAME_LENGTH];
 };
 

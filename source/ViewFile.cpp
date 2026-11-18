@@ -7,7 +7,6 @@
 #include <stdio.h>
 
 // external threads -- see threads.cpp for the actual functions
-extern int32 selectionWait(void *);
 extern int32 slideshowThread(void *);
 
 
@@ -24,6 +23,9 @@ ViewFile::ViewFile(BRect R, const char* name, const char* path, Setup *s, Langua
    BuildListing();
 
    BScrollView *fileListScroll = new BScrollView("fileScroll",fileList, B_FRAME_EVENTS, true, true);
+   BScrollBar* horizontalScrollBar = fileList->ScrollBar(B_HORIZONTAL);
+   if (horizontalScrollBar != NULL)
+     horizontalScrollBar->Hide();
    
    //Supports Layout management.	
    
@@ -35,8 +37,6 @@ ViewFile::ViewFile(BRect R, const char* name, const char* path, Setup *s, Langua
    SetLayout(ViewFileLayout);
    AddChild(fileListScroll);
 	
-   selectionThread = spawn_thread(selectionWait, "selectionThread", B_NORMAL_PRIORITY  , (void*)this);
-   resume_thread(selectionThread);
    slideshowThreadID = spawn_thread(slideshowThread, "slideshowThread", B_NORMAL_PRIORITY  , (void*)this);
     
 };
@@ -156,9 +156,7 @@ int32 ViewFile::totalImages() {
 
 
 
-// threadCall -- The selectionWait thread calls this method if the selection in the list
-//               has been there for a decent amount of time (0.6 seconds).  This makes it
-//               easier to scroll through lists without having to load each image.
+// Load the currently selected image while advancing a slideshow.
 void ViewFile::threadCall(int32 num) {
    if (fileList->CurrentSelection() < 0) return;
    if (setup->Sliding()) return;
@@ -379,7 +377,6 @@ int32 ViewFile::BuildListing() {
 //                        make sure that setup->Sliding = false just in case;
 //
 void ViewFile::DetachedFromWindow() {
-  kill_thread(selectionThread);
   kill_thread(slideshowThreadID);
   setup->SetSliding(false);
 }

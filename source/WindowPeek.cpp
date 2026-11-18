@@ -333,8 +333,8 @@ WindowPeek::WindowPeek(BRect R, const char* name, Setup* s, Language *w)
 
 
   tempMenu = new BMenu( words->Return(L_BMENU_HELP) );
-  tempMenu->AddItem(  new BMenuItem( words->Return(L_BMENUITEM_ABOUT),  new BMessage(B_ABOUT_REQUESTED) )  );
   tempMenu->AddItem(  new BMenuItem( words->Return(L_BMENUITEM_DOCUMENTATION),  new BMessage(PEEK_DOCUMENTATION) )  );
+  tempMenu->AddItem(  new BMenuItem( words->Return(L_BMENUITEM_ABOUT),  new BMessage(B_ABOUT_REQUESTED) )  );
 
   mainMenu->AddItem(tempMenu);
   
@@ -377,6 +377,12 @@ WindowPeek::WindowPeek(BRect R, const char* name, Setup* s, Language *w)
   imagePane->EmptyList();
   
   BScrollView * imageScroll = new BScrollView("imagePaneScrollView", imagePane, B_FRAME_EVENTS, true, true, B_NO_BORDER);
+  BScrollBar* horizontalScrollBar = imagePane->ScrollBar(B_HORIZONTAL);
+  if (horizontalScrollBar != NULL)
+    horizontalScrollBar->Hide();
+  BScrollBar* verticalScrollBar = imagePane->ScrollBar(B_VERTICAL);
+  if (verticalScrollBar != NULL)
+    verticalScrollBar->Hide();
   
   //Creating a Layout:
   
@@ -958,20 +964,16 @@ void WindowPeek::MessageReceived(BMessage* e) {
                                if (sam->IsDirectory()) {
                                        if (setup->Sliding()) SetSliding(! setup->Sliding() );
                                        filePane->Notified();
-                                     } 
-                                 else 
-                                 if (setup->RunNonImageFiles()) ExecuteProgram( filePane->Selected(), true ); 
+                               }
                                delete sam;
                                break;
                              }  
     case PEEK_DELETE_FILE: DeleteFile(); break;
     case PEEK_FILE_SELECTED: {
                                 if (filePane->Selected() < 0) break;
-                                   if (setup->Sliding()) {
-                                         BEntry *sam = filePane->EntryAt( filePane->Selected() );
-                                         if (IsType(sam,"image")) LoadImage(sam);
-                                         delete sam;
-                                   }
+                                BEntry *sam = filePane->EntryAt(filePane->Selected());
+                                if (IsType(sam, "image")) LoadImage(sam);
+                                delete sam;
                                  break;
                              }
     case PEEK_SLIDESHOW_ASCENDING:  

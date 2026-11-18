@@ -2,6 +2,7 @@
 #include "WindowPeek.h"
 #include "ViewFile.h"
 #include "PeekApp.h"
+#include <InterfaceDefs.h>
 #include <Roster.h>
 
 // PictureViewer - will replace picView to enhance the viewing experience
@@ -14,7 +15,7 @@ PictureViewer::PictureViewer(const char* name, Setup* s)
   thePic = NULL;
   setup = s;
   imgZoom = 1.0;
-  SetViewColor(0,0,0);
+  SetViewUIColor(B_DOCUMENT_BACKGROUND_COLOR);
 }
 
 

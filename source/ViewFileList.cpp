@@ -1,6 +1,7 @@
 #include "ViewFileList.h"
 #include <Application.h>
 #include <Alert.h>
+#include <InterfaceDefs.h>
 #include <string.h>
 #include "ViewFile.h"
 #include "WindowPeek.h"
@@ -11,6 +12,7 @@ ViewFileList::ViewFileList(const char* name, Setup* s, Language* w)
 {
   setup = s;
   words = w;
+  SetViewUIColor(B_LIST_BACKGROUND_COLOR);
 }
 
 bool ViewFileList::InitiateDrag(BPoint a, int32 index, bool selected) {

@@ -1,5 +1,6 @@
 #include "PListItem.h"
 
+#include <InterfaceDefs.h>
 #include <string.h>
 
 PListItem::PListItem(BEntry *e, const char *name) : BListItem()
@@ -45,25 +46,19 @@ entry_ref PListItem::Ref() {
 
 
 void PListItem::DrawItem(BView *owner, BRect frame, bool complete) {
-  owner->SetDrawingMode(B_OP_OVER);
-  if (complete) {
-    owner->SetHighColor(owner->ViewColor());
+  owner->SetDrawingMode(B_OP_COPY);
+  color_which background = IsSelected()
+    ? B_LIST_SELECTED_BACKGROUND_COLOR : B_LIST_BACKGROUND_COLOR;
+  owner->SetLowColor(ui_color(background));
+  if (complete || IsSelected()) {
+    owner->SetHighColor(ui_color(background));
     owner->FillRect(frame);
-  }  
-  if (IsSelected()) { 
-     owner->SetHighColor(142,142,142,255);
-     owner->FillRect(frame);
-   }  else {
-   }
+  }
 
-
-  if (isDirectory) {
-     owner->SetHighColor(100,0,0,0);
-     owner->MovePenTo(frame.left+4, frame.bottom-2);
-  } else { 
-      owner->SetHighColor(0,0,0,0);
-      owner->MovePenTo(frame.left+10, frame.bottom-2);
-    }     
-
+  color_which textColour = IsSelected()
+    ? B_LIST_SELECTED_ITEM_TEXT_COLOR : B_LIST_ITEM_TEXT_COLOR;
+  owner->SetHighColor(ui_color(textColour));
+  owner->MovePenTo(frame.left + (isDirectory ? 4 : 10), frame.bottom - 2);
   owner->DrawString(theName);
 }
+//---------------------------------------------------------------------------------------------------------------------------------//

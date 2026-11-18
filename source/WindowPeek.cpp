@@ -367,8 +367,8 @@ WindowPeek::WindowPeek(BRect R, const char* name, Setup* s, Language *w)
 
   // ok
   
-  alles->SetViewColor(mainMenu -> ViewColor());
-  filePane->SetViewColor(mainMenu -> ViewColor());
+  alles->SetViewUIColor(B_PANEL_BACKGROUND_COLOR);
+  filePane->SetViewUIColor(B_PANEL_BACKGROUND_COLOR);
   
   //We don't want the file pane to become too large.
   //Layout Management will not let the file pane grow larger than 200 pixels.

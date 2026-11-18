@@ -194,14 +194,7 @@ LinkView::LinkView(const char* name, const char* label, const char* url)
 void LinkView::AttachedToWindow() {
 	BStringView::AttachedToWindow();
 	SetViewUIColor(B_PANEL_BACKGROUND_COLOR);
-
-	rgb_color background = ui_color(B_PANEL_BACKGROUND_COLOR);
-	int32 luminance
-		= (299 * background.red + 587 * background.green + 114 * background.blue) / 1000;
-	if (luminance < 128)
-		SetHighColor(105, 190, 255);
-	else
-		SetHighColor(0, 76, 168);
+	SetHighColor(ui_color(B_LINK_TEXT_COLOR));
 }
 //---------------------------------------------------------------------------------------------------------------------------------//
 

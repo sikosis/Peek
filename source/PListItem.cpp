@@ -55,8 +55,13 @@ void PListItem::DrawItem(BView *owner, BRect frame, bool complete) {
     owner->FillRect(frame);
   }
 
-  color_which textColour = IsSelected()
-    ? B_LIST_SELECTED_ITEM_TEXT_COLOR : B_LIST_ITEM_TEXT_COLOR;
+  color_which textColour;
+  if (IsSelected())
+    textColour = B_LIST_SELECTED_ITEM_TEXT_COLOR;
+  else if (isDirectory)
+    textColour = B_LINK_TEXT_COLOR;
+  else
+    textColour = B_LIST_ITEM_TEXT_COLOR;
   owner->SetHighColor(ui_color(textColour));
   owner->MovePenTo(frame.left + (isDirectory ? 4 : 10), frame.bottom - 2);
   owner->DrawString(theName);

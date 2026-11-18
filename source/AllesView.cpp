@@ -94,14 +94,13 @@ void AllesView::HandleEscape()  {
 // HandleMouseWheel -- This should handle the mouse wheel according to
 //                     Setup->WheelMouseAction()
 //
-void AllesView::HandleMouseWheel(int32 ychange) {
+void AllesView::HandleMouseWheel(float ychange) {
   if (ychange == 0) return;
   WindowPeek* motherWindow = ((WindowPeek*)Window());
 
   switch (motherWindow->setup->WheelMouseAction()) {
 	case P_WHEEL_SCROLL_LIST:
-		if ( motherWindow->filePane->SelectNextImage( ychange ) )
-			motherWindow->filePane->fileList->ScrollToSelection();
+		motherWindow->filePane->fileList->ScrollBy(0, ychange * 20.0f);
 		break;
 	case P_WHEEL_SCROLL_IMAGE:
 		if (ychange > 0)
@@ -118,3 +117,4 @@ void AllesView::HandleMouseWheel(int32 ychange) {
 		break;
   }
 }
+//---------------------------------------------------------------------------------------------------------------------------------//

@@ -16,7 +16,7 @@ class AllesView : public BView {
     // Handlers
     void HandleSpacebar();
     void HandleEscape();
-    void HandleMouseWheel( int32 );
+    void HandleMouseWheel(float);
     
     
 };

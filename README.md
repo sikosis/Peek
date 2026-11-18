@@ -24,10 +24,11 @@ Install the Haiku development tools, then build Peek with the system's generic
 makefile engine:
 
 ```sh
-cd source
+make clean
 make
 ```
 
+The root Makefile delegates to Haiku's generic makefile engine in `source`.
 The resulting `Peek` application is created in the `source` directory.
 
 ## SOME THINGS THAT CAN HELP

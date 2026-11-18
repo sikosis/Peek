@@ -35,10 +35,10 @@ class Setup {
       bool DragMode();
       bool AllowFullscreenStart();
 
-      void SetDefaultLanguage(char*);
-      void SetRunningPath(char*);
+      void SetDefaultLanguage(const char*);
+      void SetRunningPath(const char*);
       void SetCurrentPath(const char*);
-      void SetVersion(char*);
+      void SetVersion(const char*);
       void SetWindowFrame(BRect);
       void SetFileListRight(float);
       void SetViewingMode(int32);

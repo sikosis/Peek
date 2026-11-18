@@ -5,13 +5,13 @@
 
 // menu helpers -----------------------------------------------------------
 
-BMenuItem* menuMaker(char* label, BMessage* send,char trigger, bool marked) {
+BMenuItem* menuMaker(const char* label, BMessage* send,char trigger, bool marked) {
   BMenuItem *bob = new BMenuItem( label, send, trigger );
   bob->SetMarked(marked);
   return bob;
 }
 
-BMenuItem* slideshowHelper( char* label, int32 delay, Setup* setup ) {
+BMenuItem* slideshowHelper(const char* label, int32 delay, Setup* setup) {
       BMessage *msg = new BMessage(PEEK_SLIDESHOW_DELAY);
       msg->AddInt32("delay",delay);
       BMenuItem *temp = new BMenuItem(label,msg   );
@@ -19,7 +19,7 @@ BMenuItem* slideshowHelper( char* label, int32 delay, Setup* setup ) {
      return temp;
 }
 
-BMenuItem* mouseHelper( char* label, int32 button, int32 opp, Setup* setup ) {
+BMenuItem* mouseHelper(const char* label, int32 button, int32 opp, Setup* setup) {
       BMessage *msg = new BMessage( PEEK_MOUSE_CHANGE );  
       msg->AddInt32("button",button);  
       msg->AddInt32("action",opp);

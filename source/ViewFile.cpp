@@ -11,7 +11,7 @@ extern int32 selectionWait(void *);
 extern int32 slideshowThread(void *);
 
 
-ViewFile::ViewFile(BRect R, char* name, char* path, Setup *s, Language *w)
+ViewFile::ViewFile(BRect R, const char* name, const char* path, Setup *s, Language *w)
 :  BView(R,name, B_FOLLOW_TOP_BOTTOM, B_WILL_DRAW | B_FRAME_EVENTS | B_SUPPORTS_LAYOUT)
 {
    setup = s;
@@ -135,7 +135,7 @@ bool ViewFile::SelectNextImage(int32 dir) {
 // totalOfType -- returns the total number of files of type *s (eg. "image", "image/jpeg")
 //                in the current directory.
 
-int32 ViewFile::totalOfType(char* s) {
+int32 ViewFile::totalOfType(const char* s) {
   int32 total = 0;
   int32 i = fileList->CountItems();
   for (int32 k = 0; k < i; k ++) {

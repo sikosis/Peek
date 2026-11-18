@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-PListItem::PListItem(BEntry *e, char *name) : BListItem()
+PListItem::PListItem(BEntry *e, const char *name) : BListItem()
 {
  theFile = NULL;
  theFile = new entry_ref;
@@ -13,7 +13,7 @@ PListItem::PListItem(BEntry *e, char *name) : BListItem()
     else isDirectory = false;
 }
 
-PListItem::PListItem(entry_ref e, bool isD, char *name) : BListItem()
+PListItem::PListItem(entry_ref e, bool isD, const char *name) : BListItem()
 {
  theFile = NULL;
  theFile = new entry_ref;

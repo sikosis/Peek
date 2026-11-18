@@ -5,7 +5,22 @@
 #include <StorageKit.h>
 #include <Alert.h>
 #include <List.h>
+#include <LocaleRoster.h>
 #include <image.h>
+
+
+static const char* PreferredLanguageFile() {
+	BMessage preferredLanguages;
+	const char* language = NULL;
+	if (BLocaleRoster::Default()->GetPreferredLanguages(&preferredLanguages) == B_OK
+		&& preferredLanguages.FindString("language", 0, &language) == B_OK
+		&& language != NULL && strncmp(language, "de", 2) == 0) {
+		return "deutsch";
+	}
+
+	return "english";
+}
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 PeekApp::PeekApp() : BApplication("application/x-vnd.Peek") {
   // set up the Setup object
@@ -38,6 +53,7 @@ PeekApp::PeekApp() : BApplication("application/x-vnd.Peek") {
 
   // load language
   words = new Language();
+  setup->SetDefaultLanguage(PreferredLanguageFile());
   LoadLanguage();
 
   mainWindow = new WindowPeek(setup->WindowFrame(), "Peek", setup, words);
@@ -48,22 +64,29 @@ PeekApp::PeekApp() : BApplication("application/x-vnd.Peek") {
 
 
 void PeekApp::LoadLanguage() {
-  char fileName[B_FILE_NAME_LENGTH];
-  char temp[B_FILE_NAME_LENGTH];
-  setup->DefaultLanguage(temp);
-  setup->RunningPath(fileName);
-  strcat(fileName,"/languages/");
-  strcat(fileName,temp);
-  if (words->Load(fileName) != B_OK) {
-    (new BAlert("no default","Default language file not found (or corrupt)! trying for english.","pour for vour?"))->Go();
-     setup->RunningPath(fileName);
-     strcat(fileName,"/languages/english");
-      if (words->Load(fileName) != B_OK) {
-        (new BAlert("no language","English not found  (or corrupt). Your Peek needs the file languages/english to run. Try renaming one of the other language files to 'english' or download a full copy of Peek. ","no!"))->Go(); 
-        be_app->PostMessage(B_QUIT_REQUESTED);
-      }
-   }  
+  char runningPath[B_PATH_NAME_LENGTH];
+  char languageName[B_FILE_NAME_LENGTH];
+  setup->RunningPath(runningPath);
+  setup->DefaultLanguage(languageName);
+
+  BPath directory(runningPath);
+  for (int32 depth = 0; depth < 3; depth++) {
+    BPath languagePath(directory);
+    languagePath.Append("languages");
+    languagePath.Append(languageName);
+    if (words->Load(languagePath.Path()) == B_OK)
+      return;
+
+    BPath parent;
+    if (directory.GetParent(&parent) != B_OK)
+      break;
+    directory = parent;
+  }
+
+  (new BAlert("no language", "Peek could not find its language resources.", "Quit"))->Go();
+  be_app->PostMessage(B_QUIT_REQUESTED);
 }
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 
 void PeekApp::Quit() 

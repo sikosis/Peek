@@ -5,11 +5,11 @@
 
 // copies & sets the default language filename into/from target.
 void Setup::DefaultLanguage(char* target) { strcpy(target,defaultLanguage); }
-void Setup::SetDefaultLanguage(char* target) { strcpy(defaultLanguage,target); }
+void Setup::SetDefaultLanguage(const char* target) { strcpy(defaultLanguage,target); }
 
 // copies & sets Peek's current directory into/from target.
 void Setup::RunningPath(char* target) { strcpy(target,runningPath); }
-void Setup::SetRunningPath(char* target) { strcpy(runningPath,target); }
+void Setup::SetRunningPath(const char* target) { strcpy(runningPath,target); }
 
 // copies & sets Peek's current directory into/from target.
 void Setup::CurrentPath(char* target) { strcpy(target,currentPath); }
@@ -18,7 +18,7 @@ void Setup::SetCurrentPath(const char* target) { strcpy(currentPath,target); }
 
 // copies & sets Peek's version into/from target.
 void Setup::Version(char* target) { strcpy(target,version); }
-void Setup::SetVersion(char* target) { strcpy(version,target); }
+void Setup::SetVersion(const char* target) { strcpy(version,target); }
 
 // follow file
 bool Setup::FollowFile() { return followFile; }
@@ -154,10 +154,10 @@ int32 Setup::LoadSettings()
 
    BString temp;
    myConfig->ValueChar("VERSION",&temp);
-   this->SetVersion((char*)temp.String());
+   this->SetVersion(temp.String());
    
    myConfig->ValueChar("LANGUAGE",&temp);
-   this->SetDefaultLanguage((char*)temp.String() );
+   this->SetDefaultLanguage(temp.String());
 
    followFile = myConfig->ValueBool( "FOLLOW_FILE" );
    imagesOnly = myConfig->ValueBool( "IMAGES_ONLY" );

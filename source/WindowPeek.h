@@ -28,7 +28,7 @@
 class WindowPeek : public BWindow {
 
    public:
-    WindowPeek(BRect, char*, Setup*, Language*);
+    WindowPeek(BRect, const char*, Setup*, Language*);
 
     PictureViewer *imagePane;
     ViewFile *filePane;
@@ -49,7 +49,7 @@ class WindowPeek : public BWindow {
 
     virtual void FrameMoved(BPoint);
 
-    bool IsType(BEntry *, char*);
+    bool IsType(BEntry*, const char*);
 
     void CenterWindow();
 
@@ -58,7 +58,7 @@ class WindowPeek : public BWindow {
     Setup *setup;
    private:
     BFilePanel *saveWindow;
-    BMenu* SaveAsMenu( char*, int32);
+    BMenu* SaveAsMenu(const char*, int32);
     void FileSave(BMessage*);
     void SaveFile(BMessage*);
 

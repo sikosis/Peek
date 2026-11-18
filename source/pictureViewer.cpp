@@ -7,7 +7,7 @@
 // PictureViewer - will replace picView to enhance the viewing experience
 //                 and people will go "ooh, aah, wow..."
 
-PictureViewer::PictureViewer(char* name, Setup* s)
+PictureViewer::PictureViewer(const char* name, Setup* s)
 : BView( name, B_WILL_DRAW | B_FRAME_EVENTS )
 {
   theRef = NULL;

@@ -8,14 +8,14 @@
 #include <be/storage/Volume.h>
 #include <be/translation/TranslationUtils.h>
 
-extern BMenuItem* menuMaker(char* label, BMessage* send,char trigger, bool marked);
-extern BMenuItem* slideshowHelper( char* label, int32 delay, Setup* setup );
-extern BMenuItem* mouseHelper( char* label, int32 button, int32 opp, Setup* setup );
+extern BMenuItem* menuMaker(const char* label, BMessage* send,char trigger, bool marked);
+extern BMenuItem* slideshowHelper(const char* label, int32 delay, Setup* setup);
+extern BMenuItem* mouseHelper(const char* label, int32 button, int32 opp, Setup* setup);
 
 
 // Save as Menu
 
-BMenu* WindowPeek::SaveAsMenu( char* name, int32 msgnum) {
+BMenu* WindowPeek::SaveAsMenu(const char* name, int32 msgnum) {
     BMenu *tempItemB= new BMenu(name);
 
     translator_id *list;
@@ -51,7 +51,7 @@ BMenu* WindowPeek::SaveAsMenu( char* name, int32 msgnum) {
 
 // ------ Constructor
 
-WindowPeek::WindowPeek( BRect R, char* name , Setup* s, Language *w)
+WindowPeek::WindowPeek(BRect R, const char* name, Setup* s, Language *w)
 : BWindow(R,name,B_DOCUMENT_WINDOW,B_WILL_ACCEPT_FIRST_CLICK | B_ASYNCHRONOUS_CONTROLS) {
 
   setup = s;
@@ -499,7 +499,7 @@ void WindowPeek::CenterWindow() {
 // Example:  IsType( my_entry, "image" ) == true
 //           IsType( my_entry, "application" ) == false
 //
-bool WindowPeek::IsType(BEntry *file, char* str) {
+bool WindowPeek::IsType(BEntry *file, const char* str) {
        bool answer = false;
        BNode *myNode = new BNode(file);
        BNodeInfo *myNodeInfo = new BNodeInfo(myNode);

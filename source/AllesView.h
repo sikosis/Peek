@@ -7,7 +7,7 @@
 class AllesView : public BView {
 
   public:
-    AllesView( BRect, char* );
+    AllesView(BRect, const char*);
     virtual void MessageReceived(BMessage *);
     
   private:

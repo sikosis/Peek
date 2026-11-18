@@ -20,9 +20,9 @@
 
 class ViewFile : public BView {
    public:
-      ViewFile(BRect, char*, char*, Setup*, Language*);
+      ViewFile(BRect, const char*, const char*, Setup*, Language*);
       void ChangeDirectory( const char* );
-      int32 totalOfType(char* );
+      int32 totalOfType(const char*);
       int32 totalImages();
       int32 Selected();
       BList* SelectedList();

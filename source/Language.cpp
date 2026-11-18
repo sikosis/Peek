@@ -7,23 +7,27 @@
 
 
 int Language::Load(const char* name) {
-  BFile *languageFile = new BFile (name, B_READ_ONLY);
-  
-  if (languageFile->InitCheck() != B_OK) return B_ERROR;
+  BFile languageFile(name, B_READ_ONLY);
+  if (languageFile.InitCheck() != B_OK) return B_ERROR;
  
   for (int i = 0; i < L_MAX_LINES; i++) {
-    strcpy( lines[i], "");
+    size_t length = 0;
+    lines[i][0] = '\0';
     char k = '.';
     while (k != '\n') {
-      if (languageFile->Read(&k,1) != 1) return B_ERROR;
-      if (k != '\n' && k != '+') strncat(lines[i],&k,1);
-      if (k == '+') strncat(lines[i],"\n",1);
+      if (languageFile.Read(&k, 1) != 1) return B_ERROR;
+      if (k == '\n') continue;
+      if (length >= sizeof(lines[i]) - 1) return B_BAD_DATA;
+      lines[i][length++] = k == '+' ? '\n' : k;
+      lines[i][length] = '\0';
     }
   }
 
   return B_OK;
 }
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 char* Language::Return(int num) {
   return lines[num];
 }
+//---------------------------------------------------------------------------------------------------------------------------------//

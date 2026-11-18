@@ -16,7 +16,7 @@
 #include "WindowPeek.h"
 
 
-AllesView::AllesView(BRect R, char* name)
+AllesView::AllesView(BRect R, const char* name)
 : BView(R,name, B_FOLLOW_ALL_SIDES, B_NAVIGABLE | B_WILL_DRAW | B_FRAME_EVENTS)
 {
  

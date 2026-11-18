@@ -6,7 +6,7 @@
 #include "WindowPeek.h"
 
 
-ViewFileList::ViewFileList(char* name, Setup* s, Language* w) 
+ViewFileList::ViewFileList(const char* name, Setup* s, Language* w)
 :  BListView(name , B_SINGLE_SELECTION_LIST, B_FRAME_EVENTS | B_WILL_DRAW)
 {
   setup = s;

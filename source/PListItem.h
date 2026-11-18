@@ -9,8 +9,8 @@
 class PListItem : public BListItem 
 {
   public: 
-   PListItem(BEntry *, char * = NULL);
-   PListItem(entry_ref e, bool isD = false, char *name = NULL);
+   PListItem(BEntry*, const char* = NULL);
+   PListItem(entry_ref e, bool isD = false, const char* name = NULL);
    
    ~PListItem();
    virtual void DrawItem(BView *, BRect, bool);

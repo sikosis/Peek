@@ -20,7 +20,7 @@
 class PictureViewer : public BView {
 
   public:
-    PictureViewer(char*, Setup*);
+    PictureViewer(const char*, Setup*);
 
     // Acceptable loading methods
     void LoadBitmap( BBitmap* );

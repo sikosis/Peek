@@ -24,18 +24,25 @@ PictureViewer::PictureViewer(const char* name, Setup* s)
 //
 //               YOU MUST DELETE THE BEntry
 //
-void PictureViewer::LoadEntry( BEntry* e ) {
-   if ( e == NULL ) return;
+status_t PictureViewer::LoadEntry(BEntry* e) {
+   if (e == NULL) return B_BAD_VALUE;
+
+   entry_ref ref;
+   if (e->GetRef(&ref) != B_OK) return B_BAD_VALUE;
+   BBitmap* bitmap = BTranslationUtils::GetBitmap(&ref);
+   if (bitmap == NULL) return B_BAD_DATA;
+
    Window()->Lock();
    EmptyList();
-   theRef = new entry_ref;
-   e->GetRef( theRef );
-   thePic = BTranslationUtils::GetBitmap(theRef);
+   theRef = new entry_ref(ref);
+   thePic = bitmap;
 
    if ( setup->ViewingMode() == PEEK_IMAGE_WINDOW_TO_IMAGE ) ResizeToImage();
    Window()->Unlock();
    Refresh();
+   return B_OK;
 }
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 
 // LoadBitmap -- Takes the BBitmap and then loads it accordinly into

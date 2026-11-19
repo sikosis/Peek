@@ -33,7 +33,7 @@ class WindowPeek : public BWindow {
     PictureViewer *imagePane;
     ViewFile *filePane;
 
-    void LoadImage(BEntry*);
+    bool LoadImage(BEntry*);
     void LoadImage(BBitmap*);
     
     void SetSliding( bool );   

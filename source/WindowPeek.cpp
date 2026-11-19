@@ -435,12 +435,14 @@ bool WindowPeek::QuitRequested() {
 // LoadImage(BEntry*) -- Takes a BEntry and makes a BList out of it's entry_ref
 //                       and then sends it to LoadImages(BList);
 //                       You MUST delete the BEntry yourself!
-void WindowPeek::LoadImage(BEntry* e) {
+bool WindowPeek::LoadImage(BEntry* e) {
+   if (e == NULL || imagePane->LoadEntry(e) != B_OK)
+      return false;
+
     // Follow the file
    if (setup->FollowFile()) FollowFile(e, false);   
    // end follow files.
    Lock();
-   imagePane->LoadEntry(e);
 
     // Set the window title to the file name
            char fileName[B_FILE_NAME_LENGTH];
@@ -449,8 +451,10 @@ void WindowPeek::LoadImage(BEntry* e) {
     // done
 
    filePane->fileList->ScrollToSelection();
-   Unlock(); 
+   Unlock();
+   return true;
 }
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 // LoadImage(BBitmap*) -- Just sends it through to the PictureViewer right now.
 //                        Hm... You can NOT delete rhe BBitmap when the method returns.
@@ -972,7 +976,7 @@ void WindowPeek::MessageReceived(BMessage* e) {
     case PEEK_FILE_SELECTED: {
                                 if (filePane->Selected() < 0) break;
                                 BEntry *sam = filePane->EntryAt(filePane->Selected());
-                                if (IsType(sam, "image")) LoadImage(sam);
+                                if (!sam->IsDirectory()) LoadImage(sam);
                                 delete sam;
                                  break;
                              }

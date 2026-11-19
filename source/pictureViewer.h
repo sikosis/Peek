@@ -24,7 +24,7 @@ class PictureViewer : public BView {
 
     // Acceptable loading methods
     void LoadBitmap( BBitmap* );
-    void LoadEntry ( BEntry*  );
+    status_t LoadEntry(BEntry*);
 
     // outside access methods
     BEntry* CurrentFile();

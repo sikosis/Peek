@@ -945,6 +945,21 @@ void WindowPeek::SetCompactMode( bool value ) {
 //
 void WindowPeek::DispatchMessage(BMessage *e, BHandler *h) {
   switch (e->what)  {
+     case B_KEY_DOWN: {
+                      const char* bytes = e->FindString("bytes");
+                      if (bytes != NULL && bytes[1] == '\0') {
+                         if (bytes[0] == '+' || bytes[0] == '=') {
+                            PostMessage(PEEK_IMAGE_ZOOM_IN);
+                            return;
+                         }
+                         if (bytes[0] == '-') {
+                            PostMessage(PEEK_IMAGE_ZOOM_OUT);
+                            return;
+                         }
+                      }
+                      BWindow::DispatchMessage(e, h);
+                      return;
+                     }
      case B_KEY_UP:
      case B_MOUSE_WHEEL_CHANGED:
      
